@@ -1,0 +1,39 @@
+@use './variables' as *;
+@use 'sass:map';
+@mixin respond-to($size) {
+  @if map.has-key($breakpoints, $size) {
+    @media (max-width: map.get($breakpoints, $size)) {
+      @content;
+    }
+  } @else {
+    @warn "Breakpoint #{$size} not in the list!";
+  }
+}
+
+@mixin grid-layout($columns, $gap: 1rem) {
+  display: grid;
+  grid-template-columns: repeat($columns, 1fr);
+  gap: $gap;
+}
+
+@mixin responsive-grid($min-width: 250px, $gap: 1rem, $padding: 2rem) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax($min-width, 1fr));
+  gap: $gap;
+  padding: $padding;
+}
+
+@mixin button($bg-color, $text-color: #fff) {
+  background-color: $bg-color;
+  color: $text-color;
+  padding: 0.8rem 1.5rem;
+  border-radius: 5px;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: darken($bg-color, 10%);
+  }
+}
